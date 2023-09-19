@@ -110,3 +110,4 @@ const init = function () {
 }
 
 init();
+console.log(`Hello test !`);
