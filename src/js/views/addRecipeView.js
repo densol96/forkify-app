@@ -66,6 +66,7 @@ class AddRecipeView extends View {
             }
             else if (field === 'servings' && (input < 1 || input > 10)) {
                 alert(`Servings should be in a range from 1 to 10! Try again!`);
+                return false;
             }
         }
         return true;
