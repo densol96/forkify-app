@@ -8,7 +8,8 @@ const state = {
     searchQuery: [],
     resultsPerPage: RES_PER_PAGE,
     page: 1,
-    bookmarks: []
+    bookmarks: [],
+    timerID: undefined
 };
 
 const updateLocalStorage = function () {
@@ -57,7 +58,6 @@ const loadSearchResults = async function (searchResult) {
         const recipes = data.data?.recipes;
         if (data.status != `success` || recipes.length == 0) throw new Error(`Unable to load  search results. Please, provide a proper name of the meal!`);
         state.searchQuery = recipes.map(searchItem => {
-            console.log(searchItem);
             return {
                 id: searchItem.id,
                 title: searchItem.title,
@@ -114,7 +114,6 @@ const updateServings = function (button) {
 
 const updateBookmarks = function () {
     if (!state.recipe.isInBookmarks) {
-        console.log(`Pushed to bookmarks!`);
         state.bookmarks.push(state.recipe);
         state.recipe.isInBookmarks = true;
     } else {
@@ -159,5 +158,5 @@ const clearBookmarksManually = function () {
 export {
     state, loadRecipe, loadSearchResults, getSearchResultsPage,
     updateLeftBar, updateCurrentPageState, updateServings, updateBookmarks,
-    getLocalStorage, updateLocalStorage, uploadRecipe
+    getLocalStorage, updateLocalStorage, uploadRecipe, clearBookmarksManually
 };

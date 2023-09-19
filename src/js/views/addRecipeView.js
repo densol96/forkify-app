@@ -10,6 +10,8 @@ class AddRecipeView extends View {
     _btnUploadModal = document.querySelector(".btn upload__btn");
     _originalFormInnerHTML = this._parentElement.innerHTML;
     _message = "Your recipe has been added succesfully! :)";
+    _data;
+
     constructor() {
         super();
         this._addShowModal();
@@ -23,6 +25,7 @@ class AddRecipeView extends View {
     _toggleModalWindow() {
         if (!this._window.classList.contains("hidden")) {
             setTimeout(this._restoreOriginalForm.bind(this), 500);
+            this._data.timerID && clearTimeout(this._data.timerID);
         }
         this._window.classList.toggle("hidden");
         this._overlay.classList.toggle("hidden");
@@ -38,13 +41,13 @@ class AddRecipeView extends View {
         const thisReference = this;
         window.addEventListener("keydown", function (e) {
             if (e.key === "Escape" && !thisReference._window.classList.contains("hidden")) {
-                console.log(`Trigerred!`);
                 thisReference._toggleModalWindow.call(thisReference);
             }
         })
     }
 
-    _addFormUpload(handler) {
+    _addFormUpload(handler, stateReference) {
+        this._data = stateReference;
         const thisObject = this;
         this._parentElement.addEventListener("submit", function (e) {
             e.preventDefault();

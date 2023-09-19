@@ -4,7 +4,6 @@ import icons from 'url:../../img/icons.svg';
 export default class PreviewView extends View {
 
     _createPreviewItem(item) {
-        console.log(item);
         return `
             <li class="preview">
                 <a class="preview__link " href="#${item.id}">
@@ -27,6 +26,7 @@ export default class PreviewView extends View {
 
     _markActiveTab() {
         const id = window.location.hash.slice();
+        console.log(id);
         this._parentElement.querySelectorAll("li a").forEach(tab => {
             if (tab.classList.contains("preview__link--active") && tab.getAttribute("href") !== id) {
                 tab.classList.remove("preview__link--active");

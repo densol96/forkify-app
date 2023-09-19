@@ -6,6 +6,7 @@ import paginationView from './views/paginationView.js'
 import bookmarksView from './views/bookmarksView.js';
 import addRecipeView from './views/addRecipeView.js';
 import { timeout } from './views/helpers.js';
+import { CLOSE_MODAL_AFTER } from './config.js'
 // Bundler will create a new .js file, therefore img paths will not work there.
 // We need to import the file in order for them to render correctly in browser.
 import 'core-js/stable';
@@ -84,16 +85,16 @@ const controlAddRecipe = async function (newRecipe) {
         controlBookmarks();
         recipeView.render(model.state.recipe, true);
         addRecipeView.renderMessage();
-        setTimeout(function () {
-            addRecipeView._toggleModalWindow.bind(addRecipeView)
-        }, 2500);
+        model.state.timerID = setTimeout(function () {
+            addRecipeView._toggleModalWindow.call(addRecipeView)
+        }, CLOSE_MODAL_AFTER);
         recipeView.addServingsController(controlServings);
         recipeView.addBookMarkEvent(controlBookmarks);
         // Change ID in the URL witht reloading the page
         window.history.pushState(null, '', `#${model.state.recipe.id}`);
+        resultsView._markActiveTab();
     } catch (err) {
         addRecipeView.renderError(err.message);
-        console.log(err);
     }
 }
 
@@ -104,7 +105,7 @@ const init = function () {
     searchView.addSearchEvent(controlSearchResults);
     searchView.addResizeEvent();
     paginationView.addPaginationEvent(controlPagination);
-    addRecipeView._addFormUpload(controlAddRecipe);
+    addRecipeView._addFormUpload(controlAddRecipe, model.state);
 }
 
 init();
