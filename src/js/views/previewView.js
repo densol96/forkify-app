@@ -25,8 +25,7 @@ export default class PreviewView extends View {
     }
 
     _markActiveTab() {
-        const id = window.location.hash.slice();
-        console.log(id);
+        const id = window.location.hash;
         this._parentElement.querySelectorAll("li a").forEach(tab => {
             if (tab.classList.contains("preview__link--active") && tab.getAttribute("href") !== id) {
                 tab.classList.remove("preview__link--active");
