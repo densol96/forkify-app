@@ -93,6 +93,7 @@ const controlAddRecipe = async function (newRecipe) {
         // Change ID in the URL witht reloading the page
         window.history.pushState(null, '', `#${model.state.recipe.id}`);
         bookmarksView._markActiveTab();
+        resultsView._markActiveTab();
     } catch (err) {
         addRecipeView.renderError(err.message);
     }
